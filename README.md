@@ -3,7 +3,7 @@
 ### University of Maryland Global Campus
 
 ### Team
-Mahan Fouladi Chami
+Mahan Fouladi
 <br>Naziha James
 <br>Tao Ma
 <br>Jessica Riguero
