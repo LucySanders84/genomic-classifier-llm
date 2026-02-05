@@ -3,8 +3,8 @@
     #import required libraries
 
 #Configure fine-tuning
-    #PEFT
-    #QLoRAs
+    #PEFT?
+    #QLoRAs?
 #Prepare the tokenizer
 
 #Prepare data
