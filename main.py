@@ -8,6 +8,7 @@
 #Prepare the tokenizer
 
 #Prepare data
+    #source coding and non-coding sequences
     #create pipeline to add fasta sequences to train.csv, test.csv files
 
 #Load and Configure the Model for Sequence Classification
