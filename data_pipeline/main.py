@@ -14,6 +14,7 @@ def main():
         #split remaining genome into 500bp segments
         #test whether segment is coding or not
         #append segments that don't code to csv file
+    #create pipeline script to generate csv files
     pass
 
 
