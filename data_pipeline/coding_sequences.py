@@ -1,6 +1,3 @@
-import re
-from dataclasses import dataclass
-
 from constants import CODING_SEQ_DATA, CODING_SEQUENCES_CSV, LABEL_FOR_CODING_SEQUENCES
 from fasta_file import get_fasta_file_contents, split_entries
 from data_pipeline.Sequence import Sequence
