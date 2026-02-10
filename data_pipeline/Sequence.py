@@ -4,14 +4,23 @@ import re
 class Sequence:
     header: str
     bp_seq: str
-    genome_location: list[str]
+    genome_loci: list[str]
+    chromosome_id: str = None
     read_direction: str
 
-    def __init__(self, header, bp_seq, read_direction, genome_location=None):
+
+    def __init__(self, header, bp_seq, read_direction, genome_location=None, label=None):
         self.header = header
         self.bp_seq = bp_seq
-        self.genome_location = genome_location
+        self.label = label
+        self.genome_loci = genome_location
         self.read_direction = read_direction
+
+    def set_label(self, label):
+        self.label = label
+
+    def set_chromosome_id(self, chromosome: str):
+        self.chromosome_id = chromosome
 
     @staticmethod
     def build_from_fasta_entry(entry: str):
