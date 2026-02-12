@@ -1,28 +1,24 @@
 import re
 
+from typing_extensions import Pattern
+
 from classes.Sequence import Sequence
 
 
 class SequenceBuilder:
 
     @staticmethod
-    def build_from_fasta_entry(entry: str):
+    def build_from_fasta_entry(entry: str, chromosome_id_pattern: Pattern):
         fasta = entry.split('\n')
         header = fasta[0]
         bp_seq = "".join(fasta[1:]).replace('\n', '').upper()
-        genome_location = None
-        read_direction = 'forward'
-        m = re.search(r'location=', header)
-        if m is not None:
-            complement = re.search(r'complement', header[m.start():])
-            read_direction = 'complement' if complement is not None else 'forward'
-            location = re.search(r'(?<=>)\S*', header[m.start():])
-            genome_location = location if location is not None else None
-        return Sequence(header, bp_seq, read_direction, genome_location)
+        m = re.search(chromosome_id_pattern, header)
+        chromosome_id = m.group() if m is not None else None
+        return Sequence(header, None, bp_seq=bp_seq, chromosome_id=chromosome_id)
 
     @staticmethod
-    def build_from_fasta_entries(entries: list[str]):
-        return [SequenceBuilder.build_from_fasta_entry(entry) for entry in entries]
+    def build_from_fasta_entries(entries: list[str], chromosome_id_pattern: Pattern):
+        return [SequenceBuilder.build_from_fasta_entry(entry, chromosome_id_pattern) for entry in entries]
 
     @staticmethod
     def build_from_gff_line(entry: str):
