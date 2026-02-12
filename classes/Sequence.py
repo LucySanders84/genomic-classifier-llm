@@ -25,6 +25,21 @@ class Sequence:
     def set_chromosome_id(self, chromosome: str):
         self.chromosome_id = chromosome
 
+    def get_kmers(self, k: int, t:int, add_downstream_short_contigs=True):
+        kmers = []
+        i = 0
+        l = len(self.bp_seq)
+        while i < l - k + 1:
+            kmers.append(self.bp_seq[i:i+k])
+            i += t
+        if l - i < k:
+            if add_downstream_short_contigs is True:
+                bp_count_to_add = k - (l - i)
+                kmers.append(self.bp_seq[i - bp_count_to_add:])
+            else:
+                kmers.append(self.bp_seq[i:])
+        return kmers
+
 
 def main():
     pass
