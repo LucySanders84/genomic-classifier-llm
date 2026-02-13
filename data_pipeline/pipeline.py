@@ -2,10 +2,9 @@ from typing_extensions import Pattern
 
 from classes.PipelineParameters import PipelineParameters
 
-from data_pipeline.lib.sequence_source import chromosome_dict
-from data_pipeline.lib.contigs import contigs
-from data_pipeline.lib.sequences import build_sequences
-
+from data_pipeline.pipeline_lib.sequence_source import chromosome_dict
+from data_pipeline.pipeline_lib.contigs import contigs
+from data_pipeline.pipeline_lib.sequences import build_sequences
 
 """
 definitions:
@@ -47,7 +46,7 @@ def run(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_para
     # build contigs
     contig_lists = {}
     for key in seq_lists.keys():
-        contig_lists[key] =contigs.build(seq_lists[key], input_parameters['length'], input_parameters['stride'])
+        contig_lists[key] = contigs.build(seq_lists[key], input_parameters['length'], input_parameters['stride'])
 
     # build sequence/label tuples list
     inputs: list[tuple] = []
