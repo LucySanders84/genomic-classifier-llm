@@ -25,7 +25,7 @@ class Sequence:
     def set_chromosome_id(self, chromosome: str):
         self.chromosome_id = chromosome
 
-    def get_kmers(self, k: int, t:int, add_downstream_short_contigs=True):
+    def get_kmers(self, k: int, t:int, add_downstream_short_fragments=True):
         kmers = []
         i = 0
         l = len(self.bp_seq)
@@ -33,7 +33,7 @@ class Sequence:
             kmers.append(self.bp_seq[i:i+k])
             i += t
         if l - i < k:
-            if add_downstream_short_contigs is True:
+            if add_downstream_short_fragments is True:
                 bp_count_to_add = k - (l - i)
                 kmers.append(self.bp_seq[i - bp_count_to_add:])
             else:

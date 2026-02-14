@@ -9,5 +9,5 @@ class PipelineParameters:
     sequence_source: list[Sequence]
     feature_source_filename: str
     target_type: str
-    contig_length: int
+    fragment_length: int
     stride: int

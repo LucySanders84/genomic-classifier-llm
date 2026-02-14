@@ -9,7 +9,7 @@ FASTA files from http://www.candidagenome.org/download/sequence/C_albicans_SC531
 definitions:
 input - a line item in a dataset used to train LLM
 sequence - a string of base pairs
-contig - a sequence split from a larger sequence
+fragment - a sequence split from a larger sequence
  """
 
 
@@ -17,7 +17,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 
 DATA_PATH = ROOT_DIR / 'data_files'
 
-CONTIG_LENGTH = 512
+FRAGMENT_LENGTH = 512
 
 DATA_SOURCE_PARAMETERS_EXONS_AND_INTRONS = {
     'labels': {
@@ -39,8 +39,8 @@ DATA_SOURCE_PARAMETERS_EXONS_AND_INTRONS = {
 }
 
 INPUT_PARAMETERS_EXONS_AND_INTRONS = {
-    'length': CONTIG_LENGTH,
-    'stride': int(CONTIG_LENGTH/2)
+    'length': FRAGMENT_LENGTH,
+    'stride': int(FRAGMENT_LENGTH/2)
 }
 
 

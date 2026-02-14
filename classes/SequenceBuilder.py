@@ -27,9 +27,9 @@ class SequenceBuilder:
         return Sequence(attribute, strand, chromosome_id=seq_name, chromosome_loci=chromosome_loci)
 
     @staticmethod
-    def build_from_gff(gff_file_contents:str, target_contig_type: str):
+    def build_from_gff(gff_file_contents:str, target_fragment_type: str):
         lines = []
         for line in gff_file_contents.strip('\n').split('\n'):
-            if re.search(rf'\t{target_contig_type}\t', line):
+            if re.search(rf'\t{target_fragment_type}\t', line):
                 lines.append(line)
         return [SequenceBuilder.build_from_gff_line(line) for line in lines]
