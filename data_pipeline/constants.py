@@ -18,6 +18,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 DATA_PATH = ROOT_DIR / 'data_files'
 
 FRAGMENT_LENGTH = 512
+MAX_N_PERCENTAGE = 0.02
 
 DATA_SOURCE_PARAMETERS_EXONS_AND_INTRONS = {
     'labels': {
@@ -40,7 +41,8 @@ DATA_SOURCE_PARAMETERS_EXONS_AND_INTRONS = {
 
 INPUT_PARAMETERS_EXONS_AND_INTRONS = {
     'length': FRAGMENT_LENGTH,
-    'stride': int(FRAGMENT_LENGTH/2)
+    'stride': int(FRAGMENT_LENGTH/2),
+    'max_n_percentage': MAX_N_PERCENTAGE
 }
 
 
