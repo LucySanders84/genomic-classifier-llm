@@ -1,3 +1,5 @@
+import re
+
 from typing_extensions import Pattern
 
 from classes.PipelineParameters import PipelineParameters
@@ -43,3 +45,29 @@ def build(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_pa
 
     # build sequence/label tuples list
     return [(fragment, label) for label in fragment_lists.keys() for fragment in fragment_lists[label]]
+
+
+def validate(inputs: list[tuple[str, str]], max_n_percentage, expected_length) -> list[str]:
+    """Validates fragment length, alphabet, and a label presence to
+    return a list of TSV-formatted strings.
+    """
+    validated_data = []
+    valid_dna_pattern = re.compile(r'^[ACGTN]+$', re.IGNORECASE)
+    #check for missing labels or empty sequences
+    for fragment, label in inputs:
+        if not label or not fragment:
+            continue
+        #length from constants.py
+        if len(fragment) != expected_length:
+            continue
+        #ensure no weird characters from GFF/Fasta
+        if not valid_dna_pattern.match(fragment):
+            continue
+        #drop sequences with mostly 'N' gaps
+        n_count = fragment.upper().count('N')
+        if (n_count / expected_length) > max_n_percentage:
+            continue
+        #if all pass, format as TSV string for the splitting step
+        validated_data.append(f"{fragment}\t{label}\n")
+
+    return validated_data
