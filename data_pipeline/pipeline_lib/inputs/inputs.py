@@ -1,4 +1,6 @@
 import re
+import random
+import os
 
 from typing_extensions import Pattern
 
@@ -71,3 +73,58 @@ def validate(inputs: list[tuple[str, str]], max_n_percentage, expected_length) -
         validated_data.append(f"{fragment}\t{label}\n")
 
     return validated_data
+
+
+# Balance and Split Genomics Data
+def balance_and_split_data(validated_data: list[str], output_dir):
+    # Note - let me know if you want me to rename the output something else - Jessi
+
+    # Random seed added to ensure that data split remains consistent across randomized trials
+    random.seed()
+
+    # This group separates out how many coding and non-coding fragments are actually present
+    label_groups = {}
+    for line in validated_data:
+        label = line.strip().split('\t')[1]
+        if label not in label_groups:
+            label_groups[label] = []
+        label_groups[label].append(line)
+
+    if not label_groups:
+        print("No data to process.")
+        return
+
+    # This section finds the fragment grouping with the lowest sample size
+    counts = {label: len(samples) for label, samples in label_groups.items()}
+    min_count = min(counts.values())
+    print(f"Class distribution: {counts}")
+    print(f"Balancing dataset to {min_count} samples per class.")
+
+    # From here, we use the minimum count to randomly shuffle and create lists for training
+    balanced_list = []
+    for label in label_groups:
+        balanced_list.extend(random.sample(label_groups[label], min_count))
+    # Line shuffles the lists to ensure a unique product each time
+    random.shuffle(balanced_list)
+
+    # Calculating split indices for training sets at 80%, 10%, then 10%, respectively
+    # Note - this is where I first thought of the N problem, will discuss at next meeting - Jessi
+    total = len(balanced_list)
+    train_end = int(total * 0.8)
+    val_end = train_end + int(total * 0.1)
+
+    data_splits = {
+        "train.tsv": balanced_list[:train_end],
+        "val.tsv": balanced_list[train_end:val_end],
+        "test.tsv": balanced_list[val_end:]
+    }
+
+    # This writes to file system
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    for filename, data in data_splits.items():
+        path = os.path.join(output_dir, filename)
+        with open(path, 'w') as f:
+            f.writelines(data)
+        print(f"Successfully created {len(data)} with training data sequences to {path}")

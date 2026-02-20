@@ -2,6 +2,7 @@
 from typing_extensions import Pattern
 
 from data_pipeline import exons_introns_pipeline
+from data_pipeline.constants import DATA_PATH
 from data_pipeline.pipeline_lib.inputs import inputs as inputs_lib
 
 """
@@ -28,13 +29,13 @@ def run(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_para
     # INPUT list[tuple(sequence: str, label:str)
     #   -> validate fragment output
     #       -> OUTPUT list[str (values separated by tabs)]
+    validated_data = inputs_lib.validate(inputs, input_parameters["max_n_percentage"], input_parameters["length"])
+    print(f'{len(validated_data)} inputs created after validation steps')
 
-    validated_inputs = inputs_lib.validate(inputs, input_parameters["max_n_percentage"], input_parameters["length"])
-    print(f'{len(validated_inputs)} inputs created after validation steps')
     # INPUT list[str (values separated by tabs)]
     #   -> balance 1 and 0 inputs across train, test, val sets
     #       -> WRITE TO FILE
-
+    inputs_lib.balance_and_split_data(validated_data, DATA_PATH)
     pass
 
 if __name__ == '__main__':
