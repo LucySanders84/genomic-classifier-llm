@@ -1,6 +1,10 @@
 # Prepare resources
     #create requirements.txt detailing libraries that need to be installed
     #import required libraries
+import re
+
+from data_pipeline.pipeline_lib.sequence_source import chromosome_dict
+
 
 #Configure fine-tuning
     #PEFT?
@@ -27,7 +31,9 @@
 
 
 def main():
-    pass
+    chromosomes = chromosome_dict.build(
+        '/data_files/C_albicans_SC5314_A22_current_chromosomes.fasta',
+        re.compile(r'Ca22chr\S+_C_albicans_SC5314'))
 
 if __name__ == '__main__':
     main()
