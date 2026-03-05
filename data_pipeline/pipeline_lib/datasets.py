@@ -18,6 +18,7 @@ def write_from_data_splits(data_splits: dict[str, list[tuple[str,str]]], output_
     for filename, data in data_splits.items():
 
         path = os.path.join(output_dir, filename + '.' + file_extension)
+
         formatted_data = format_inputs_for_dataset(data, line_delimiter, col_delimiter)
         with open(path, 'w') as f:
             f.writelines(formatted_data)
