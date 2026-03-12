@@ -13,9 +13,6 @@ sequence - a string of base pairs
 fragment - a sequence split from a larger sequence
 """
 
-
-
-
 def run(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_parameters: dict[str, int]):
 
     # INPUT parameters for data source and inputs
@@ -40,15 +37,6 @@ def run(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_para
     datasets.write_from_data_splits(data_splits, DATA_PATH, 'tsv', '\t', '\n')
 
     pass
-
-
-# Balance and Split Genomics Data
-import random
-import os
-
-
-# This group separates out how many coding and non-coding fragments are actually present
-
 
 if __name__ == '__main__':
     #runs exons and introns pipeline as default
