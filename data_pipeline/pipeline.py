@@ -37,7 +37,7 @@ def run(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_para
     # balance 1 and 0 inputs across train, test, val sets
     data_splits = inputs_lib.balance(validated_data)
     # WRITE TO FILE
-    datasets.write_from_data_splits(data_splits, DATA_PATH, 'csv', ',', '\n')
+    datasets.write_from_data_splits(data_splits, DATA_PATH, 'tsv', ',', '\n')
 
     pass
 
