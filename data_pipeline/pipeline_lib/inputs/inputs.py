@@ -2,10 +2,9 @@ import re
 import random
 
 from typing_extensions import Pattern
-
 from classes.PipelineParameters import PipelineParameters
 from data_pipeline.pipeline_lib.fragments import fragments
-from data_pipeline.pipeline_lib.sequence_source import chromosome_dict
+from data_pipeline.pipeline_lib.sequence_source import sequence_source
 from data_pipeline.pipeline_lib.sequences import build_sequences
 
 

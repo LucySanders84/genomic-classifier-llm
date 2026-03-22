@@ -1,5 +1,3 @@
-import re
-
 from classes.Sequence import Sequence
 from data_pipeline.pipeline_lib.fragments import short_fragments
 
