@@ -4,16 +4,27 @@ import random
 from typing_extensions import Pattern
 
 from classes.PipelineParameters import PipelineParameters
-from data_pipeline.constants import DATA_PATH
 from data_pipeline.pipeline_lib.fragments import fragments
 from data_pipeline.pipeline_lib.sequence_source import chromosome_dict
 from data_pipeline.pipeline_lib.sequences import build_sequences
 
 
 def build(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_parameters: dict[str, int]) -> dict[str, list[str]]:
-    # build fragments with sequences and labels -> OUTPUT list[tuple(sequence: str, label:str)
+    """Builds inputs for datasets based on data source and input parameters.
 
-    #build sequence source dict
+    Performs the following operations:
+         - Builds a sequence source dictionary based on data source parameters.
+         - Builds a pipeline parameters object from data source and input parameters.
+         - Gets sequences for each group represented in the dataset.
+         - Builds fragment list from sequences.
+    Args:
+        data_source_parameters: parameter settings for obtaining data from source
+        input_parameters: parameter settings for the types of inputs to build for this dataset
+
+    Returns: list of fragments created from sequences sourced from data source and conforming to input parameters.
+    """
+
+    # build sequence source dict
     chromosomes = chromosome_dict.build(
         data_source_parameters['ss']['filename'],
         data_source_parameters['ss']['id_pattern'])
