@@ -31,12 +31,12 @@ def run(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_para
     for label in inputs:
         print(f'Group {label}: {len(inputs[label])} inputs passed validation steps')
 
-    # INPUT list[tuple(sequence: str, label:str)
+    # INPUT dict[str, list[str]]
     #   -> validate fragment output
     #       -> OUTPUT list[str (values separated by tabs)]
     validated_data = inputs_lib.validate(inputs, input_parameters["max_n_percentage"], input_parameters["length"])
 
-    # INPUT list[str (values separated by tabs)]
+    # INPUT dict[str, list[str]]
     # balance 1 and 0 inputs across train, test, val sets
     data_splits = inputs_lib.balance(validated_data)
     # WRITE TO FILE
