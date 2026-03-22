@@ -1,16 +1,14 @@
+"""
+Module containing constant values.
+
+data source:
+GFF files from http://www.candidagenome.org/download/gff/C_albicans_SC5314/Assembly22/ accessed on 2/11/2026\n
+FASTA files from http://www.candidagenome.org/download/sequence/C_albicans_SC5314/Assembly22/current/ accessed on 2/11/2026
+"""
 import re
 
 from pathlib import Path
-"""
-data source:
-GFF files from http://www.candidagenome.org/download/gff/C_albicans_SC5314/Assembly22/ accessed on 2/11/2026 
-FASTA files from http://www.candidagenome.org/download/sequence/C_albicans_SC5314/Assembly22/current/ accessed on 2/11/2026
 
-definitions:
-input - a line item in a dataset used to train LLM
-sequence - a string of base pairs
-fragment - a sequence split from a larger sequence
- """
 
 
 ROOT_DIR = Path(__file__).resolve().parent.parent

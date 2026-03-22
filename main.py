@@ -3,8 +3,6 @@
     #import required libraries
 import re
 
-from data_pipeline.pipeline_lib.sequence_source import sequence_source
-
 
 #Configure fine-tuning
     #PEFT?

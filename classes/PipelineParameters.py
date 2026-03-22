@@ -6,7 +6,7 @@ from classes.Sequence import Sequence
 @dataclass
 class PipelineParameters:
     label: str
-    sequence_source: list[Sequence]
+    sequence_source: dict[str, Sequence]
     feature_source_filename: str
     target_type: str
     fragment_length: int

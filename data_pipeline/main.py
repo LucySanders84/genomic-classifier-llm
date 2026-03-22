@@ -1,9 +1,8 @@
-from data_pipeline import exons_introns_pipeline
-
+from data_pipeline import pipeline
 
 
 def main():
-    exons_introns_pipeline.run()
+    pipeline.main()
 
 if __name__ == '__main__':
     main()

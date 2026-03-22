@@ -1,9 +1,8 @@
 from classes.Sequence import Sequence
 from classes.SequenceBuilder import SequenceBuilder
-from data_pipeline.pipeline_lib.sequences import set_all_sequences
 
 
-def from_gff(gff_filename: str,target_fragment_type: str):
+def build_from_gff(gff_filename: str, target_fragment_type: str):
     with open(gff_filename) as gff:
         gff_file_contents = gff.read()
         seqs = SequenceBuilder.build_from_gff(
@@ -12,7 +11,7 @@ def from_gff(gff_filename: str,target_fragment_type: str):
     return seqs
 
 
-def run(
+def build(
         filename: str,
         target_fragment_type: str,
         sequence_source: dict[str, Sequence],
@@ -25,9 +24,20 @@ def run(
         if source_type != 'chromosome':
             raise ValueError('Only chromosome source type supported')
 
-        seqs = from_gff(filename, target_fragment_type)
-        set_all_sequences.by_chromosome_loci(sequence_source, seqs)
+        seqs = build_from_gff(filename, target_fragment_type)
+        set_all_seqs_by_chromosome_loci(sequence_source, seqs)
         return seqs
 
     except ValueError as e:
         print(f'ValueError raised: {e}')
+
+
+def get_bp_seqs_from_chromosome_loci(seq: Sequence, chromosome: Sequence):
+    [start, stop] = seq.chromosome_loci
+    return chromosome.bp_seq[start - 1: stop]
+
+
+def set_all_seqs_by_chromosome_loci(chromosomes: dict[str, Sequence], seqs: list[Sequence]):
+    for seq in seqs:
+        chromosome = chromosomes[seq.chromosome_id]
+        seq.bp_seq = get_bp_seqs_from_chromosome_loci(seq, chromosome)

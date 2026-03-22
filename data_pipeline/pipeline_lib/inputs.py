@@ -1,11 +1,11 @@
+"""Module containing functions for dataset inputs (the datapoints found in a dataset)."""
+
 import re
 import random
 
 from typing_extensions import Pattern
 from classes.PipelineParameters import PipelineParameters
-from data_pipeline.pipeline_lib.fragments import fragments
-from data_pipeline.pipeline_lib.sequence_source import sequence_source
-from data_pipeline.pipeline_lib.sequences import build_sequences
+from data_pipeline.pipeline_lib import fragments, sequence_source, sequences
 
 
 def build(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_parameters: dict[str, int]) -> dict[str, list[str]]:
@@ -24,7 +24,7 @@ def build(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_pa
     """
 
     # build sequence source dict
-    chromosomes = chromosome_dict.build(
+    chromosomes = sequence_source.build(
         data_source_parameters['ss']['filename'],
         data_source_parameters['ss']['id_pattern'])
 
@@ -45,7 +45,7 @@ def build(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_pa
     # get sequences for each group
     seq_lists = {}
     for params in pipeline_params:
-        seq_lists[params.label] = build_sequences.run(
+        seq_lists[params.label] = sequences.build(
             params.feature_source_filename,
             params.target_type,
             chromosomes)
@@ -87,6 +87,16 @@ def validate(inputs: dict[str, list[str]], max_n_percentage, expected_length) ->
 
 
 def balance(validated_data: dict[str, list[str]]):
+    """Balances validated data between datasets.
+
+    Creates training (80%), val (10%) and test (10%) datasets.
+
+    Args:
+        validated_data: data object containing validated data; key is a group label and
+            value is a list of fragments.
+
+    Returns: data object containing training, val and test datasets
+    """
 
     # Random seed added to ensure that data split remains consistent across randomized trials
     random.seed()

@@ -1,5 +1,5 @@
+"""Module containing fragment related functions."""
 from classes.Sequence import Sequence
-from data_pipeline.pipeline_lib.fragments import short_fragments
 
 
 def get(seqs:list[Sequence], k:int, t:int) -> list[str]:
@@ -22,8 +22,22 @@ def build(seq_list: list[Sequence], fragment_length: int, stride: int, remove_sh
     """
 
     if remove_short_seqs is True:
-        short_fragments.remove(seq_list, fragment_length)
+        remove_short_fragments(seq_list, fragment_length)
     return get(seq_list, fragment_length, stride)
+
+
+def remove_short_fragments(seqs: list[Sequence], k: int) -> None:
+    """
+    Removes sequences shorter than k from sequence list.
+
+    Args:
+        seqs: list of DNA sequences
+        k: minimum length
+    """
+
+    for seq in seqs[:]:
+        if len(seq.bp_seq) < k:
+            seqs.remove(seq)
 
 
 

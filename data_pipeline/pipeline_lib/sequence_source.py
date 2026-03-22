@@ -1,3 +1,5 @@
+import re
+
 from typing_extensions import Pattern
 
 from classes.Sequence import Sequence

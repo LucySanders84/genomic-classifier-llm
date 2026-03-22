@@ -1,29 +1,35 @@
+"""
+Pipeline module for obtaining and preprocessing data, building balanced datasets and writing dataset files to disk.
+
+Pipeline definitions:
+    input: a line item in a dataset used to train LLM.\n
+    sequence: a string of base pairs.\n
+    fragment: a sequence split from a larger sequence.
+"""
 
 from typing_extensions import Pattern
 
 from data_pipeline import exons_introns_pipeline
 from data_pipeline.constants import DATA_PATH
-from data_pipeline.pipeline_lib import datasets
-from data_pipeline.pipeline_lib.inputs import inputs as inputs_lib
+from data_pipeline.pipeline_lib import datasets, inputs as inputs_lib
 
-"""
-definitions:
-input - a line item in a dataset used to train LLM
-sequence - a string of base pairs
-fragment - a sequence split from a larger sequence
-"""
+
 
 def run(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_parameters: dict[str, int]):
+    """Runs dataset pipeline with provided data source and input parameters.
 
+    Pipeline performs the following operations:
+        - Creates inputs for datasets.
+        - Validates input data.
+        - Balances inputs across training, val and test datasets.
+        - Writes datasets to csv files.
+    """
     # INPUT parameters for data source and inputs
     #   -> build fragments with sequences and labels
     #       -> OUTPUT list[tuple[sequence: str, label:str]]
-
     inputs = inputs_lib.build(data_source_parameters, input_parameters)
     for label in inputs:
         print(f'Group {label}: {len(inputs[label])} inputs passed validation steps')
-    for key in data_source_parameters["fsf"].keys():
-        print("\t", data_source_parameters["fsf"][key])
 
     # INPUT list[tuple(sequence: str, label:str)
     #   -> validate fragment output
@@ -34,13 +40,17 @@ def run(data_source_parameters: dict[str, dict[str, str | Pattern ]], input_para
     # balance 1 and 0 inputs across train, test, val sets
     data_splits = inputs_lib.balance(validated_data)
     # WRITE TO FILE
-    datasets.write_from_data_splits(data_splits, DATA_PATH, 'tsv', '\t', '\n')
+    datasets.write_from_data_splits(data_splits, DATA_PATH, 'csv', ',', '\n')
 
-    pass
+
+def main():
+    """Default pipeline sources sequences from exons and introns and writes csv files."""
+    exons_introns_pipeline.run()
+
 
 if __name__ == '__main__':
-    #runs exons and introns pipeline as default
-    exons_introns_pipeline.run()
+    main()
+
 
 
     

@@ -1,1 +1,0 @@
-"""Module for creating a sequence source from which to build fragments for inputs."""
