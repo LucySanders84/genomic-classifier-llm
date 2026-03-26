@@ -40,7 +40,7 @@ To run the annotation-based dataset pipeline, we must first download source data
 
 #### Setup
 ##### Data Sources
-In order to build datasets, we must first obtain the Candida Albicans genome data:
+In order to build the datasets, we first obtain the Candida Albicans genome data:
 
 Linux:
 ```shell
