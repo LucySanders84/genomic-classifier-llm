@@ -1,8 +1,7 @@
 
 # Genomic Classifier Transformer Model
 
-Implementation of a genomic RNA coding classification pipeline using baseline models  
-and fine-tuned Transformer-based architectures (DNABERT-2) (Zhou et al, 2024). In this project, datasets are built from the Candida Albicans genome. Coding sequences are defined as those occurring on an exon region. Non-coding sequences are sourced from intergenic regions. Data obtained from [Candida Genome Database](http://www.candidagenome.org/).
+Implementation of a genomic RNA coding classification pipeline using baseline models and fine-tuned Transformer-based architectures (DNABERT-2) (Zhou et al, 2024). In this project, datasets are built from the Candida Albicans genome. Coding sequences are defined as those occurring on an exon region. Non-coding sequences are sourced from intergenic regions. Data obtained from [Candida Genome Database](http://www.candidagenome.org/).
 
 ## Contributors
 Jessica Riguero
