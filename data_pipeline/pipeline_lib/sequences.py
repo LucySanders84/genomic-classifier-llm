@@ -12,8 +12,8 @@ def build_from_gff(gff_filename: str, target_fragment_type: str):
 
 
 def build(
-        filename: str,
-        target_fragment_type: str,
+        feature_source_filename: str,
+        target_feature_type: str,
         sequence_source: dict[str, Sequence],
         source_type='chromosome',
         file_format='gff'):
@@ -24,7 +24,7 @@ def build(
         if source_type != 'chromosome':
             raise ValueError('Only chromosome source type supported')
 
-        seqs = build_from_gff(filename, target_fragment_type)
+        seqs = build_from_gff(feature_source_filename, target_feature_type)
         set_all_seqs_by_chromosome_loci(sequence_source, seqs)
         return seqs
 
